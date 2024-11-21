@@ -29,8 +29,8 @@ namespace MyTaskAPI.Data
             // User Table
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasKey(e => e.UserID);
-                entity.Property(e => e.UserID).UseIdentityColumn(1000, 1);
+                entity.HasKey(e => e.UserId);
+                entity.Property(e => e.UserId).UseIdentityColumn(1, 1);
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.FullName).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.Password).IsRequired();
@@ -40,8 +40,8 @@ namespace MyTaskAPI.Data
             // Task Table
             modelBuilder.Entity<MyTaskAPI.Models.Task>(entity =>
             {
-                entity.HasKey(e => e.TaskID);
-                entity.Property(e => e.TaskID).UseIdentityColumn();
+                entity.HasKey(e => e.TaskId);
+                entity.Property(e => e.TaskId).UseIdentityColumn();
                 entity.Property(e => e.TaskName).IsRequired().HasMaxLength(255);
                 entity.Property(e => e.Description).HasMaxLength(500);
                 entity.Property(e => e.IsImportant).IsRequired();
@@ -51,15 +51,15 @@ namespace MyTaskAPI.Data
                 // Relationship
                 entity.HasOne(e => e.User)
                     .WithMany(u => u.Tasks)
-                    .HasForeignKey(e => e.UserID)
+                    .HasForeignKey(e => e.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
             // Step Table
             modelBuilder.Entity<Step>(entity =>
             {
-                entity.HasKey(e => e.StepID);
-                entity.Property(e => e.StepID).UseIdentityColumn();
+                entity.HasKey(e => e.StepId);
+                entity.Property(e => e.StepId).UseIdentityColumn();
                 entity.Property(e => e.StepNumber).IsRequired();
                 entity.Property(e => e.StepName).IsRequired().HasMaxLength(1000);
                 entity.Property(e => e.IsCompleted).IsRequired();
@@ -67,7 +67,7 @@ namespace MyTaskAPI.Data
                 // Relationship
                 entity.HasOne(e => e.Task)
                     .WithMany(t => t.Steps)
-                    .HasForeignKey(e => e.TaskID)
+                    .HasForeignKey(e => e.TaskId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
         }

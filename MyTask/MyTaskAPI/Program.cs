@@ -1,3 +1,4 @@
+using MyTaskAPI.Configurations;
 using MyTaskAPI.Data;
 
 namespace MyTaskAPI
@@ -12,11 +13,21 @@ namespace MyTaskAPI
 
             builder.Services.AddControllers();
 
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            builder.Services.AddApplicationServices();
+
             builder.Services.AddDbContext<ApplicationDbContext>();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
             app.UseHttpsRedirection();
 
